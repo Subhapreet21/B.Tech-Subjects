@@ -1,0 +1,15 @@
+<template>
+    <lightning-card title="Upcoming Events" icon-name="custom:custom63">
+        <template if:true={events}>
+            <template for:each={events} for:item="event">
+                <div key={event.Id} class="event-item">
+                    <p>{event.Name} - {event.Event_Date__c} - {event.Location__c}</p>
+                    <lightning-button label="View Details" onclick={handleViewDetails} data-id={event.Id}></lightning-button>
+                </div>
+            </template>
+        </template>
+        <template if:false={events}>
+            <p>No upcoming events available.</p>
+        </template>
+    </lightning-card>
+</template>

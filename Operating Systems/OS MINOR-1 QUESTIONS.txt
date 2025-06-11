@@ -1,0 +1,14 @@
+OS MINOR-1 QUESTIONS
+
+1) define os and os structures
+2) explain os services and functions.
+3) explain os types and services
+4) explain deadlock concept in detail(or)explain deadlock concept with a neat diagram
+5) explain process synchronization in detail.
+6) conditions for occurence of deadlock
+7) write about layered approach to a system design? What are the advantages and disadvantages of using the layered approach?
+8) what is the responsibility of os in connection with os componenets
+9) what are the criteria for evaluating the CPU scheduling algorithms? Explain the Round-Robin scheduling algorithm with a suitable example.
+10) What is system call and types of system calls?
+11) Explain the process state diagram with a neat sketch.
+12) Explain logical address and physical address in memory management.

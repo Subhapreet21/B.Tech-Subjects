@@ -1,0 +1,475 @@
+1.Create a package ‘mru’  and create sub packages cse,aiml in your current working directory
+Create a default class student in the above subpackages with the following attributes:  name, age, gender and   grade.  Have methods for storing as well as displaying 
+
+program:
+//cse/Student.java content:
+package mru.cse;
+public class Student {
+    private String name;
+    private int age;
+    private String gender;
+    private String grade;
+
+    public Student(String name, int age, String gender, String grade) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.grade = grade;
+    }
+
+    public void displayInfo() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Gender: " + gender);
+        System.out.println("Grade: " + grade);
+    }
+
+}
+//aiml/Student.java content:
+package mru.aiml;
+public class Student {
+    private String name;
+    private int age;
+    private String gender;
+    private String grade;
+
+    public Student(String name, int age, String gender, String grade) {
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.grade = grade;
+    }
+
+    public void displayInfo() {
+        System.out.println("Name: " + name);
+        System.out.println("Age: " + age);
+        System.out.println("Gender: " + gender);
+        System.out.println("Grade: " + grade);
+    }
+}
+
+//Main.java
+import mru.cse.Student;
+import mru.aiml.Student;
+
+public class Main {
+    public static void main(String[] args) {
+        mru.cse.Student cseStudent = new mru.cse.Student("Eren", 19, "Male", "B");
+        cseStudent.displayInfo();
+        mru.aiml.Student aimlStudent = new mru.aiml.Student("Mikasa", 19, "Female", "A");
+        aimlStudent.displayInfo();
+    }
+}
+
+output:
+
+Name: Eren
+Age: 19
+Gender: Male
+Grade: A
+
+Name: Mikasa
+Age: 19
+Gender: Female
+Grade: B
+
+2.Write a method multiCatch(int[] arr, int index) in the value. class MultiCatchBlocks where arr contains integer array values and index contains an integer.Write the code in try block to print the value  of arr[index] and also print the division value of arr[index] by index.Write the catch blocks for:
+ArithmeticException which will print "Division by zero exception occurred"
+ArrayIndexOutOfBoundsException which will print "Array index out of bounds exception     occurred".Exception (which catches all exceptions) will print "Exception occurred"
+
+program:
+
+public class MultiCatchBlocks {
+    public static void multiCatch(int[] arr, int index) {
+        try {
+            System.out.println("Value at arr[" + index + "]: " + arr[index]);
+            System.out.println("Division result: " + (arr[index] / index));
+        } catch (ArithmeticException e) {
+            System.out.println("Division by zero exception occurred");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Array index out of bounds exception occurred");
+        } catch (Exception e) {
+            System.out.println("Exception occurred");
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] array = { 10, 20, 30, 40, 50 };
+        multiCatch(array, 2);
+        multiCatch(array, 10);
+        multiCatch(array, 0);
+    }
+}
+
+output:
+
+Value at arr[2]: 30
+Division result: 15
+Array index out of bounds exception occurred
+Division by zero exception occurred
+
+
+3.Write a Java Program to create your own exception as NegativeException whenever negative values are  put in an array
+
+program:
+
+class NegativeException extends Exception {
+    public NegativeException() {
+        super("Negative value found in the array");
+    }
+}
+
+public class CustomExceptionExample {
+    public static void checkArray(int[] values) throws NegativeException {
+        for (int value : values) {
+            if (value < 0) {
+                throw new NegativeException();
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        int[] array1 = { 1, 2, 3, 4, 5 };
+
+        try {
+            checkArray(array1);
+            System.out.println("Array1 does not contain negative values");
+        } catch (NegativeException e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+
+        int[] array2 = { -1, 2, 3, 4, 5 };
+
+        try {
+            checkArray(array2);
+            System.out.println("Array2 does not contain negative values");
+        } catch (NegativeException e) {
+            System.out.println("Exception: " + e.getMessage());
+        }
+    }
+}
+
+output:
+
+Array1 does not contain negative values
+Exception: Negative value found in the array
+
+4.Write a Java program that implements a Multi-Thread application that has three threads. The first thread generates a random integer every 1 second and if the value is even, the second thread computes the square of the number and prints. If the value is odd, the third thread will print the value of the cube of the number.
+
+program:
+
+import java.util.Random;
+
+class NumberGenerator implements Runnable {
+    @Override
+    public void run() {
+        Random random = new Random();
+        while (true) {
+            int randomNumber = random.nextInt(10);  
+            System.out.println("Generated number: " + randomNumber);
+
+            if (randomNumber % 2 == 0) {
+                SquareThread squareThread = new SquareThread(randomNumber);
+                new Thread(squareThread).start();
+            } else {
+                CubeThread cubeThread = new CubeThread(randomNumber);
+                new Thread(cubeThread).start();
+            }
+
+            try {
+                Thread.sleep(1000); 
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+class SquareThread implements Runnable {
+    private int number;
+
+    public SquareThread(int number) {
+        this.number = number;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Square of " + number + ": " + (number * number));
+    }
+}
+
+class CubeThread implements Runnable {
+    private int number;
+
+    public CubeThread(int number) {
+        this.number = number;
+    }
+
+    @Override
+    public void run() {
+        System.out.println("Cube of " + number + ": " + (number * number * number));
+    }
+}
+
+public class MultiThreadApplication {
+    public static void main(String[] args) {
+        NumberGenerator numberGenerator = new NumberGenerator();
+        new Thread(numberGenerator).start();
+    }
+}
+
+output:
+
+Generated number: 8
+Square of 8: 64
+Generated number: 6
+Square of 6: 36
+Generated number: 9
+Cube of 9: 729
+
+5.Write a Java program that correctly implements Producer Consumer problem using the concept of Inter Thread communication.
+
+program:
+import java.util.LinkedList;
+
+public class Threadexample {
+	public static void main(String[] args)
+		throws InterruptedException
+	{
+	
+		final PC pc = new PC();
+
+		// Create producer thread
+		Thread t1 = new Thread(new Runnable() {
+			@Override
+			public void run()
+			{
+				try {
+					pc.produce();
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+		// Create consumer thread
+		Thread t2 = new Thread(new Runnable() {
+			@Override
+			public void run()
+			{
+				try {
+					pc.consume();
+				}
+				catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+
+		// Start both threads
+		t1.start();
+		t2.start();
+
+		// t1 finishes before t2
+		t1.join();
+		t2.join();
+	}
+
+	// This class has a list, producer (adds items to list
+	// and consumer (removes items).
+	public static class PC {
+
+		// Create a list shared by producer and consumer
+		// Size of list is 2.
+		LinkedList<Integer> list = new LinkedList<>();
+		int capacity = 2;
+
+		// Function called by producer thread
+		public void produce() throws InterruptedException
+		{
+			int value = 0;
+			while (true) {
+				synchronized (this)
+				{
+					// producer thread waits while list
+					// is full
+					while (list.size() == capacity)
+						wait();
+
+					System.out.println("Producer produced-"
+									+ value);
+
+					// to insert the jobs in the list
+					list.add(value++);
+
+					// notifies the consumer thread that
+					// now it can start consuming
+					notify();
+
+					// makes the working of program easier
+					// to understand
+					Thread.sleep(1000);
+				}
+			}
+		}
+
+		// Function called by consumer thread
+		public void consume() throws InterruptedException
+		{
+			while (true) {
+				synchronized (this)
+				{
+					// consumer thread waits while list
+					// is empty
+					while (list.size() == 0)
+						wait();
+
+					// to retrieve the first job in the list
+					int val = list.removeFirst();
+
+					System.out.println("Consumer consumed-"
+									+ val);
+
+					// Wake up producer thread
+					notify();
+
+					// and sleep
+					Thread.sleep(1000);
+				}
+			}
+		}
+	}
+}
+
+output:
+
+Producer produced-0
+Consumer consumed-0
+Producer produced-1
+Producer produced-2
+Consumer consumed-1
+Consumer consumed-2
+
+
+6.Write a Java Program to create Array List and retrieve the Array List using iterators
+
+program:
+
+import java.util.*; 
+
+public class ArrayListExample { 
+
+	public static void main(String args[]) 
+	{  
+		ArrayList<Integer> list = new ArrayList<Integer>(); 
+		list.add(10); 
+		list.add(15); 
+		list.add(30); 
+		list.add(20); 
+		list.add(5);
+		System.out.println("The list is: \n"+ list); 
+		Iterator<Integer> iter = list.iterator(); 
+		System.out.println("\nThe iterator values"+ " of list are: "); 
+		while (iter.hasNext()) { 
+			System.out.print(iter.next() + " "); 
+		} 
+	} 
+} 
+output:
+
+The list is: 
+[10, 15, 30, 20, 5]
+
+The iterator values of list are: 
+10 15 30 20 5
+
+
+7.Write a Java Program to perform stack operation using Collections
+
+program:
+
+import java.util.Stack;
+
+public class StackExample {
+
+    public static void main(String[] args) {
+        Stack<Integer> stack = new Stack<>();
+        stack.push(10);
+        stack.push(20);
+        stack.push(30);
+        stack.push(40);
+
+        System.out.println("Stack elements: " + stack);
+
+        int poppedElement = stack.pop();
+        System.out.println("Popped element: " + poppedElement);
+
+        System.out.println("Stack after pop operation: " + stack);
+
+        int topElement = stack.peek();
+        System.out.println("Top element without removal: " + topElement);
+
+        boolean isEmpty = stack.isEmpty();
+        System.out.println("Is the stack empty? " + isEmpty);
+    }
+}
+
+
+output:
+
+Stack elements: [10, 20, 30, 40]
+Popped element: 40
+Stack after pop operation: [10, 20, 30]
+Top element without removal: 30
+Is the stack empty? false
+
+8.Write a Java program that displays the number of characters, lines and words in a text file
+
+program:
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
+public class FileStatistics {
+    public static void main(String[] args) {
+        String filePath = "demo.txt"; 
+        try (Scanner scanner = new Scanner(new File(filePath))) {
+            int charCount = 0;
+            int lineCount = 0;
+            int wordCount = 0;
+
+            while (scanner.hasNextLine()) {
+                String line = scanner.nextLine();
+                charCount += line.length();
+                lineCount++;
+                String[] words = line.split("\\s+");
+                wordCount += words.length;
+            }
+            System.out.println("Number of characters: " + charCount);
+            System.out.println("Number of lines: " + lineCount);
+            System.out.println("Number of words: " + wordCount);
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+
+Demo.txt:
+
+This is a sample text file.
+It contains multiple lines
+and some words for counting.
+
+
+output:
+
+Number of characters: 81
+Number of lines: 3
+Number of words: 15
+
+
+
+

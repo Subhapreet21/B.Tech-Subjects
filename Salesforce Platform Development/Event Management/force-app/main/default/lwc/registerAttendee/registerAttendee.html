@@ -1,0 +1,28 @@
+<template>
+    <lightning-card title="Register for Event" icon-name="custom:custom14">
+        <div class="form-container">
+            <lightning-input label="Name" value={attendeeName} onchange={handleInputChange} data-field="attendeeName" class="input-field"></lightning-input>
+            <lightning-input label="Email" value={email} type="email" onchange={handleInputChange} data-field="email" class="input-field"></lightning-input>
+            <lightning-input label="Phone" value={phone} type="tel" onchange={handleInputChange} data-field="phone" class="input-field"></lightning-input>
+            
+            <!-- Event dropdown -->
+            <lightning-combobox 
+                label="Select Event"
+                value={selectedEventId} 
+                options={eventOptions} 
+                onchange={handleEventChange}
+                class="input-field">
+            </lightning-combobox>
+
+            <lightning-button label="Register" onclick={handleSubmit} class="submit-button"></lightning-button>
+        </div>
+        
+        <!-- Success and Error Messages -->
+        <template if:true={successMessage}>
+            <p class="success-message">{successMessage}</p>
+        </template>
+        <template if:true={errorMessage}>
+            <p class="error-message">{errorMessage}</p>
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,9 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:gravity="center" android:padding="20dp">
+
+    <TextView android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/statusText" android:text="Current State: OFF" android:textSize="18sp"/>
+    <Switch android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/stateSwitch" android:text="Turn ON/OFF" android:layout_marginTop="20dp"/>
+</LinearLayout>

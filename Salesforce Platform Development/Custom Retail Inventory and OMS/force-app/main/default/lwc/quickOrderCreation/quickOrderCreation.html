@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Quick Order Creation" icon-name="utility:add">
+        <lightning-input type="text" label="Order Name" value={orderName} onchange={handleOrderNameChange}></lightning-input>
+        <lightning-input type="date" label="Order Date" value={orderDate} onchange={handleOrderDateChange}></lightning-input>
+        <lightning-combobox
+            label="Order Status"
+            value={orderStatus}
+            options={statusOptions}
+            onchange={handleOrderStatusChange}
+        ></lightning-combobox>
+        <lightning-button label="Create Order" onclick={createOrder} variant="brand"></lightning-button>
+    </lightning-card>
+</template>

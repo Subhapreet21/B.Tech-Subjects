@@ -1,0 +1,36 @@
+a:link {
+  color: lightblue;
+}
+a:hover {
+  color: green;
+  font-size: 1.1em;
+}
+a:active {
+  font-size: 1.1em;
+  color: red;
+}
+a:visited {
+  color: grey;
+}
+li:hover {
+  background-color: hsl(60, 100%, 72%);
+}
+li:not(:hover) {
+  background-color: lightgray;
+}
+li:nth-child(1) {
+  /* li:nth-child(odd) */
+  /* li:nth-child(even) */
+  /* li:nth-child(3n) */
+  /* li:nth-child(3n+1) */
+  /* li:nth-child(3n+2) */
+  background-color: lightgreen;
+}
+#greeting p {
+  background-color: blue;
+  padding: 10px;
+  display: none;
+}
+#greeting:hover p {
+  display: block;
+}

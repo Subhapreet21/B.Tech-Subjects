@@ -1,0 +1,14 @@
+<template>
+    <lightning-card title="Low-Stock Alert" icon-name="utility:warning">
+        <template if:true={lowStockProducts.length}>
+            <ul class="slds-list_dotted">
+                <template for:each={lowStockProducts} for:item="product">
+                    <li key={product.Id}>{product.Name} - {product.Total_Stock__c} left</li>
+                </template>
+            </ul>
+        </template>
+        <template if:false={lowStockProducts.length}>
+            <p>No products are low in stock.</p>
+        </template>
+    </lightning-card>
+</template>

@@ -1,0 +1,12 @@
+<template>
+    <lightning-card title="Top 5 Products by Sales">
+        <template if:true={topProducts}>
+            <div class="chart-container">
+                <canvas lwc:dom="manual" class="chart" width="400" height="200"></canvas>
+            </div>
+        </template>
+        <template if:true={error}>
+            <div class="slds-text-color_error">{error}</div>
+        </template>
+    </lightning-card>
+</template>

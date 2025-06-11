@@ -1,0 +1,10 @@
+<template>
+    <lightning-card title="Attendees" icon-name="standard:contact_list">
+        <template if:true={attendees}>
+            <lightning-datatable data={attendees} columns={columns} key-field="Id"></lightning-datatable>
+        </template>
+        <template if:false={attendees}>
+            <p>No attendees registered for this event.</p>
+        </template>
+    </lightning-card>
+</template>

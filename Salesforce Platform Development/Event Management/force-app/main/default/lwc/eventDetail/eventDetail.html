@@ -1,0 +1,11 @@
+<template>
+    <template if:true={eventDetails}>
+        <h1>{eventDetails.Name}</h1>
+        <p>{eventDetails.Event_Date__c}</p>
+        <p>{eventDetails.Location__c}</p>
+        <p>{eventDetails.Description__c}</p>
+    </template>
+    <template if:true={error}>
+        <p>Error loading event details: {error}</p>
+    </template>
+</template>

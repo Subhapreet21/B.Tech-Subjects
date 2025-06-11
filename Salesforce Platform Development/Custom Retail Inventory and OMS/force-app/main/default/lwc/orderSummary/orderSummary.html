@@ -1,0 +1,7 @@
+<template>
+    <lightning-card title="Order Summary" icon-name="utility:summary">
+        <template for:each={orderSummary} for:item="summary">
+            <p key={summary.status}>{summary.status}: {summary.count}</p>
+        </template>
+    </lightning-card>
+</template>

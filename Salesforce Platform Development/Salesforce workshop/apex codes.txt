@@ -1,0 +1,173 @@
+CODE-1
+
+integer telugu,english,hindi,social,physics,total,average;
+telugu=70;
+english=54;
+hindi=20;
+social=38;
+physics=87;
+total=telugu+hindi+english+social+physics;
+system.debug('Total marks are: '+total);
+average=total/5;
+system.debug('Average marks are: '+average);
+
+CODE-2
+
+integer telugu,english,hindi,social,physics,total,average;
+telugu=30;
+english=34;
+hindi=20;
+social=38;
+physics=7;
+
+if (telugu>=16 && english>=16 && hindi>=16 && social>=16 && physics>=16){
+    system.debug('Congratulations you have passed!!');
+}else{
+    system.debug('You have failed. Better luck next time');
+}
+
+CODE-3
+
+// syntax for creating an array
+
+integer[] stuAge=new integer[3];
+
+stuAge[0]=20;
+stuAge[1]=24;
+stuAge[2]=23;
+system.debug('Array size is: '+stuAge.size());
+system.debug('Array value is: '+stuAge);
+
+CODE-4
+
+list<string> countryNames = new list<string>();
+countryNames.add('India');
+countryNames.add('USA');
+countryNames.add('Italy');
+countryNames.add('France');
+countryNames.add('Japan');
+countryNames.add('Australia');
+system.debug(countryNames);
+system.debug(countryNames[0]);
+system.debug(countryNames.get(1));
+system.debug(countryNames.size());
+countryNames.remove(3);
+system.debug('After removing France: '+countryNames);
+countryNames.clear();
+system.debug('After clearing the list: '+countryNames);
+
+CODE-5
+
+public class AccountCreation {
+    public static void recordCreation(){
+        //object creation 
+        Account acc=new Account();
+        acc.Name='record creation';
+        acc.Rating='hot';
+        acc.Industry='education';
+        acc.Phone='0000000000';
+        acc.Type='prospect';
+        
+        insert acc;
+        system.debug('Account record id: '+acc.id);
+    }
+}
+
+CODE-6
+
+public class AccountCreation2 {
+    public static void recordcreation(){ 
+        for(integer counter=1;counter<=100;counter++){
+           Account acc = new account();
+           acc.Name='salesforce'+counter;
+           acc.Phone='99009090';
+           insert acc;
+           system.debug(acc.id);
+        }
+    }
+}
+
+CODE-7
+
+public class ParameterClass {
+    public static void addition(integer x, integer y){
+       system.debug('Addition value is....'+(x+y));    
+    }
+    public static void subtraction(integer x, integer y){
+       system.debug('Subtraction value is....'+(x-y));    
+    }
+    public static void multiplication(integer x, integer y){
+       system.debug('Multiplication value is....'+(x*y));    
+    }
+}
+
+CODE-8
+
+trigger accounttrigger on Account (before insert) 
+{
+    if(trigger.isInsert && trigger.isBefore){
+        for(Account acc :Trigger.new){
+            if(acc.fax == null && acc.fax==' '){
+                acc.AddError('please enter the fax number');
+               
+            } 
+        }
+        
+    }
+}
+
+CODE-9
+
+// Batch Apex Class
+public class MyBatchClass implements Database.Batchable<sObject> {
+    
+    private List<String> emailAddresses;
+
+    public MyBatchClass(List<String> emails) {
+        emailAddresses = emails;
+    }
+    public Database.QueryLocator start(Database.BatchableContext context) {
+        String query = 'SELECT Id, Name FROM Account where name like \'%test%\'';
+        return Database.getQueryLocator(query);
+    }
+    
+    public void execute(Database.BatchableContext context, List<sObject> scope) {
+        // Process each record in the batch
+        list<account> updateRecords = new list<account>();
+        for (sObject record : scope) {
+            // Perform some logic on each record
+            String accountId = (String)record.get('Id');
+            String accountName = (String)record.get('Name');
+            
+            // Example logic: Update the account record
+            Account acc = new Account(Id = accountId);
+            acc.Description = 'Updated by Batch Apex5';
+            update acc;
+            
+            // Add the updated record to a list for later update
+            updateRecords.add(acc);
+        }
+        
+        // Perform DML operation to update the records
+        update updateRecords;
+    }
+    
+    public void finish(Database.BatchableContext context) {
+        // This method is called after all batches are processed
+        System.debug('Batch processing finished!');
+        
+         Messaging.SingleEmailMessage email = new Messaging.SingleEmailMessage();
+        email.setToAddresses(emailAddresses);
+        email.setSubject('Batch Apex Job Completed');
+        email.setPlainTextBody('The Batch Apex job has finished processing.');
+
+        Messaging.SendEmailResult[] results = Messaging.sendEmail(new Messaging.SingleEmailMessage[] {email});
+        for (Messaging.SendEmailResult result : results) {
+            if (result.isSuccess()) {
+                System.debug('Email sent successfully.');
+            } else {
+                System.debug('Email sending failed. Error: ' + result.getErrors()[0].getMessage());
+            }
+        }
+    }
+}
