@@ -1,0 +1,138 @@
+
+Hadoop Single-Node Cluster Setup: Command Summary with Explanations
+
+---
+
+1) Add Hadoop Group and User
+sudo addgroup hadoop_
+sudo adduser --ingroup hadoop_ hduser_
+sudo adduser hduser_ sudo
+*Creates a dedicated group and user (hduser_) to run Hadoop safely.*
+
+---
+
+2) Switch to hduser_
+su - hduser_
+*Switches to your Hadoop user environment.*
+
+---
+
+3) Generate SSH Keys for Passwordless SSH
+ssh-keygen -t rsa -P ""
+cat ~/.ssh/id_rsa.pub >> ~/.ssh/authorized_keys
+ssh localhost
+*Enables passwordless SSH for Hadoop daemons to communicate.*
+
+---
+
+4) Download and Extract Hadoop
+cd ~/Downloads
+wget https://downloads.apache.org/hadoop/common/hadoop-3.4.1/hadoop-3.4.1.tar.gz
+tar xzf hadoop-3.4.1.tar.gz
+mv hadoop-3.4.1 hadoop
+*Downloads and extracts Hadoop into ~/Downloads/hadoop.*
+
+---
+
+5) Configure Environment Variables
+Add to ~/.bashrc:
+echo '
+export HADOOP_HOME=/home/hduser_/Downloads/hadoop
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+export PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin
+' >> ~/.bashrc
+. ~/.bashrc
+*Sets HADOOP_HOME and JAVA_HOME for hduser_ shell sessions.*
+
+---
+
+6) Set JAVA_HOME in Hadoop Configuration
+nano $HADOOP_HOME/etc/hadoop/hadoop-env.sh
+Uncomment and set:
+export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
+*Specifies Java location for Hadoop scripts.*
+
+---
+
+7) Configure core-site.xml
+nano $HADOOP_HOME/etc/hadoop/core-site.xml
+Add:
+<?xml version="1.0"?>
+<configuration>
+  <property>
+    <name>hadoop.tmp.dir</name>
+    <value>/home/hduser_/Downloads/hadoop/tmp</value>
+  </property>
+  <property>
+    <name>fs.defaultFS</name>
+    <value>hdfs://localhost:54310</value>
+  </property>
+</configuration>
+
+---
+
+8) Create Temporary Directory for Hadoop
+mkdir -p /home/hduser_/Downloads/hadoop/tmp
+sudo chown -R hduser_:hadoop_ /home/hduser_/Downloads/hadoop/tmp
+sudo chmod 750 /home/hduser_/Downloads/hadoop/tmp
+*Ensures Hadoop has write permissions to its temp directory.*
+
+---
+
+9) Configure hdfs-site.xml
+nano $HADOOP_HOME/etc/hadoop/hdfs-site.xml
+Add:
+<?xml version="1.0"?>
+<configuration>
+  <property>
+    <name>dfs.replication</name>
+    <value>1</value>
+  </property>
+  <property>
+    <name>dfs.namenode.name.dir</name>
+    <value>/home/hduser_/Downloads/hadoop/hdfs/namenode</value>
+  </property>
+  <property>
+    <name>dfs.datanode.data.dir</name>
+    <value>/home/hduser_/Downloads/hadoop/hdfs/datanode</value>
+  </property>
+</configuration>
+
+---
+
+10) Create HDFS Directories
+mkdir -p /home/hduser_/Downloads/hadoop/hdfs/namenode
+mkdir -p /home/hduser_/Downloads/hadoop/hdfs/datanode
+sudo chown -R hduser_:hadoop_ /home/hduser_/Downloads/hadoop/hdfs
+sudo chmod -R 750 /home/hduser_/Downloads/hadoop/hdfs
+*Creates data directories with proper permissions.*
+
+---
+
+11) Format the HDFS Filesystem
+$HADOOP_HOME/bin/hdfs namenode -format
+*Initializes Hadoop's filesystem metadata.*
+
+---
+
+12) Start Hadoop Services
+$HADOOP_HOME/sbin/start-dfs.sh
+$HADOOP_HOME/sbin/start-yarn.sh
+*Starts HDFS and YARN daemons.*
+
+---
+
+13) Verify Running Processes
+jps
+*Should show NameNode, DataNode, SecondaryNameNode, ResourceManager, and NodeManager.*
+
+---
+
+14) Stop Hadoop Services (when needed)
+$HADOOP_HOME/sbin/stop-yarn.sh
+$HADOOP_HOME/sbin/stop-dfs.sh
+*Gracefully shuts down your Hadoop cluster.*
+
+---
+
+Congratulations! Your single-node Hadoop cluster is now fully operational.
