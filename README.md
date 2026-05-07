@@ -1,6 +1,6 @@
 # B.Tech-Subjects
 
-This repository serves as a comprehensive collection of academic materials, assignments, laboratory exercises, and code examples for various subjects typically covered in a Bachelor of Technology (B.Tech) curriculum. It is designed to be a centralized knowledge base for students, offering resources ranging from lecture notes and question banks to practical programming implementations and project files.
+This repository serves as a centralized **storage unit for all B.Tech subjects spanning from Semester 1 to Semester 8**. It is a comprehensive collection of academic materials, assignments, laboratory exercises, and code examples for the entire Bachelor of Technology (B.Tech) curriculum. Designed to be a complete knowledge base for students throughout their 4-year degree program, it offers resources ranging from lecture notes and question banks to practical programming implementations and project files.
 
 ## Table of Contents
 
@@ -14,7 +14,7 @@ This repository serves as a comprehensive collection of academic materials, assi
 
 ### 1. Title & Summary
 
-This repository, **`B.Tech-Subjects`**, is a structured compilation of educational resources covering a wide array of B.Tech engineering disciplines. It encompasses lecture notes, detailed syllabi, assignment problem sets, question banks for examinations, and practical coding examples from various courses. The goal is to provide a readily accessible and organized archive of learning materials to support students throughout their degree program.
+This repository, **`B.Tech-Subjects`**, is a structured storage unit and compilation of educational resources covering every subject across all 8 semesters of the B.Tech engineering curriculum. It encompasses lecture notes, detailed syllabi, assignment problem sets, question banks for examinations, and practical coding examples from various courses. The goal is to provide a readily accessible and organized archive of learning materials to support students from their first day of Semester 1 through to their final Semester 8 exams.
 
 ### 2. Features/Contents
 
